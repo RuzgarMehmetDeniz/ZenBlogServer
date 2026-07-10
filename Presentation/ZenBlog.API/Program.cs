@@ -1,7 +1,8 @@
-using Scalar.AspNetCore;
-using ZenBlog.API.EndpointRegistration;
+﻿using Scalar.AspNetCore;
+using ZenBlog.API.CustomMiddlewares;
 using ZenBlog.Application.Extensions;
 using ZenBlog.Persistence.Extensions;
+using ZenBlog.Application.Features.Categories.Endpoints;   // ← bunu ekle
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
+app.UseMiddleware<CustomExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
