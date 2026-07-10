@@ -4,7 +4,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using ZenBlog.Application.Contracts.Persistence;
 using ZenBlog.Domain.Entities;
+using ZenBlog.Persistence.Concrete;
 using ZenBlog.Persistence.Context;
 
 namespace ZenBlog.Persistence.Extensions
@@ -18,6 +20,10 @@ namespace ZenBlog.Persistence.Extensions
                 options.UseSqlServer(configuration.GetConnectionString("SqlConnection"));
 
             });
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
         }
     }
 }
