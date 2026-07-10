@@ -10,7 +10,6 @@ using ZenBlog.Persistence.Context;
 namespace ZenBlog.Persistence.Extensions
 {
     public static class ServiceRegistrations
-
     {
         public static void AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
