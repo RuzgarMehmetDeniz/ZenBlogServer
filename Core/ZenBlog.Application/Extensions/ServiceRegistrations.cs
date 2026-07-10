@@ -3,6 +3,7 @@ using System.Reflection;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using ZenBlog.Application.Behaviors;
+using ZenBlog.Application.Options;
 
 
 namespace ZenBlog.Application.Extensions
@@ -23,7 +24,7 @@ namespace ZenBlog.Application.Extensions
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
-            //services.Configure<JwtTokenOptions>(configuration.GetSection(nameof(JwtTokenOptions)));
+            services.Configure<JwtTokenOptions>(configuration.GetSection(nameof(JwtTokenOptions)));
 
         }
 
