@@ -37,7 +37,6 @@ namespace ZenBlog.Persistence.Extensions
             services.AddScoped<IJwtService, JwtService>();
 
 
-
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
