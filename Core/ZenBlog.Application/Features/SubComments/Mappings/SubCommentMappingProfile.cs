@@ -1,0 +1,22 @@
+﻿using AutoMapper;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ZenBlog.Application.Features.SubComments.Commands;
+using ZenBlog.Application.Features.SubComments.Result;
+using ZenBlog.Domain.Entities;
+
+namespace ZenBlog.Application.Features.SubComments.Mappings
+{
+    public class SubCommentMappingProfile : Profile
+    {
+        public SubCommentMappingProfile()
+        {
+            CreateMap<SubComment, CreateSubCommentCommand>().ReverseMap();
+            CreateMap<SubComment, GetSubCommentsQueryResult>().ReverseMap();
+            CreateMap<SubComment, GetSubCommentByIdQueryResult>().ReverseMap();
+        }
+    }
+}

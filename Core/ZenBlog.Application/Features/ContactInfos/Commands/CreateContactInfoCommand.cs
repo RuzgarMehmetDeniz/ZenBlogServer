@@ -1,0 +1,18 @@
+﻿using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ZenBlog.Application.Base;
+
+namespace ZenBlog.Application.Features.ContactInfos.Commands
+{
+    public record CreateContactInfoCommand : IRequest<BaseResult<object>>
+    {
+        public string Address { get; init; }
+        public string Email { get; init; }
+        public string Phone { get; init; }
+        public string MapUrl { get; init; }
+    }
+}
