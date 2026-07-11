@@ -8,6 +8,7 @@ using ZenBlog.Application.Contracts.Persistence;
 using ZenBlog.Domain.Entities;
 using ZenBlog.Persistence.Concrete;
 using ZenBlog.Persistence.Context;
+using ZenBlog.Persistence.Interceptors;
 
 namespace ZenBlog.Persistence.Extensions
 {
@@ -18,6 +19,7 @@ namespace ZenBlog.Persistence.Extensions
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("SqlConnection"));
+                options.AddInterceptors(new AuditDbContextInterceptor());
 
             });
 
