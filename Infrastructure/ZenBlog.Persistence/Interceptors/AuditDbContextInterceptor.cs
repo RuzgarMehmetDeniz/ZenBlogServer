@@ -33,8 +33,6 @@ namespace ZenBlog.Persistence.Interceptors
             baseEntity.UpdatedAt = DateTime.Now;
         }
 
-
-
         public override ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result,
             CancellationToken cancellationToken = new CancellationToken())
         {
