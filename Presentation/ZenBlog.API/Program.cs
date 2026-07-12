@@ -31,10 +31,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<CustomExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
+
 app.MapGroup("/api").RegisterCategoryEndpoints();
 app.MapGroup("/api").RegisterBlogEndpoints();
 app.MapGroup("/api").RegisterUserEndpoints();
