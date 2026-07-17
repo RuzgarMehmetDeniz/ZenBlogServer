@@ -1,4 +1,5 @@
-﻿using Scalar.AspNetCore;
+﻿using System.Text.Json.Serialization;
+using Scalar.AspNetCore;
 using ZenBlog.API.CustomMiddlewares;
 using ZenBlog.Application.Extensions;
 using ZenBlog.Persistence.Extensions;
@@ -16,7 +17,19 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddPersistence(builder.Configuration);
-builder.Services.AddControllers();
+
+// Controller'lar için JSON ayarları (MapControllers kullanıldığından)
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
+
+// Minimal API endpoint'leri için JSON ayarları (MapGroup ile RegisterXEndpoints kullanıldığından)
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 
 // CORS policy tanımı (Angular dev server için)
 builder.Services.AddCors(options =>
@@ -43,6 +56,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<CustomExceptionHandlingMiddleware>();
+
 app.UseHttpsRedirection();
 
 // CORS middleware — UseAuthentication'dan ÖNCE olmalı
@@ -50,6 +64,7 @@ app.UseCors("AllowAngularApp");
 
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.MapGroup("/api").RegisterCategoryEndpoints();
