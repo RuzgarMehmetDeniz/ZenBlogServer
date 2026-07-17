@@ -17,6 +17,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddControllers();
+
+// CORS policy tanımı (Angular dev server için)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
@@ -31,6 +44,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<CustomExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
+
+// CORS middleware — UseAuthentication'dan ÖNCE olmalı
+app.UseCors("AllowAngularApp");
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
@@ -43,4 +60,5 @@ app.MapGroup("/api").RegisterSubCommentEndpoints();
 app.MapGroup("/api").RegisterContactInfoEndpoints();
 app.MapGroup("/api").RegisterMessageEndpoints();
 app.MapGroup("/api").RegisterSocialEndpoints();
+
 app.Run();
