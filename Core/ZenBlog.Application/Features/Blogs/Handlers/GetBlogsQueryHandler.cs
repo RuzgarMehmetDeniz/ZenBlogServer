@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,10 +18,13 @@ namespace ZenBlog.Application.Features.Blogs.Handlers
     {
         public async Task<BaseResult<List<GetBlogsQueryResult>>> Handle(GetBlogsQuery request, CancellationToken cancellationToken)
         {
-            var values = await _repository.GetAllAsync();
+            var values = await _repository.GetQuery()
+                .Include(x => x.Category)
+                .Include(x => x.User)
+                .Include(x => x.Comments)
+                .ToListAsync(cancellationToken);
 
             var blogs = _mapper.Map<List<GetBlogsQueryResult>>(values);
-
             return BaseResult<List<GetBlogsQueryResult>>.Success(blogs);
         }
     }

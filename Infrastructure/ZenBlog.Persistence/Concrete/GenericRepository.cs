@@ -14,6 +14,7 @@ namespace ZenBlog.Persistence.Concrete
     public class GenericRepository<TEntity>(AppDbContext _context) : IRepository<TEntity> where TEntity : BaseEntity
     {
         private readonly DbSet<TEntity> _table = _context.Set<TEntity>();
+
         public async Task<List<TEntity>> GetAllAsync()
         {
             return await _table.AsNoTracking().ToListAsync();
